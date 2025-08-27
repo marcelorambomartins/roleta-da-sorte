@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin the Wheel - Roda da Sorte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            transition: transform 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 8px solid #fff;
+        }
+
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            padding: 20px 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .segment-text {
+            transform: rotate(-45deg);
+            max-width: 80px;
+            word-wrap: break-word;
+            line-height: 1.2;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .pointer {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 30px solid #ff6b6b;
+            z-index: 5;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .spin-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            margin: 20px 0;
+        }
+
+        .spin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        }
+
+        .spin-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-section h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .item-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .item-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .add-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .items-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .remove-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #ee5a52;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            text-align: center;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .drawn-items {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            padding: 10px;
+        }
+
+        .drawn-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            animation: slideIn 0.3s ease;
+        }
+
+        .drawn-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .drawn-time {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .no-draws {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin: 20px 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .history-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .restore-btn {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .restore-btn:hover {
+            background: #44a08d !important;
+            transform: translateY(-1px);
+        }
+
+        .restore-btn.animate {
+            animation: restoreAnimation 0.5s ease;
+        }
+
+        @keyframes restoreAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .checkbox-option {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remove-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .checkbox-label:hover {
+            color: #667eea;
+        }
+
+        .no-items-message {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 15px;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .no-items-message .emoji {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .preset-btn {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .preset-btn:hover {
+            background: #6a4190;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .wheel-wrapper {
+                width: 300px;
+                height: 300px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Roda da Sorte</h1>
+        
+        <div class="wheel-container">
+            <div class="wheel-wrapper">
+                <div class="pointer"></div>
+                <div class="wheel" id="wheel"></div>
+                <div class="wheel-center">🎲</div>
+            </div>
+            
+            <button class="spin-btn" id="spinBtn">GIRAR A RODA!</button>
+            
+            <div class="result" id="result"></div>
+        </div>
+        
+        <div class="controls">
+            <div class="input-section">
+                <h3>Adicionar Item</h3>
+                <div class="input-group">
+                    <input type="text" class="item-input" id="itemInput" placeholder="Digite um item..." maxlength="30">
+                    <button class="add-btn" id="addBtn">Adicionar</button>
+                </div>
+                
+                <div class="checkbox-option">
+                    <input type="checkbox" id="removeAfterDraw" class="remove-checkbox">
+                    <label for="removeAfterDraw" class="checkbox-label">🚫 Remover item após sorteio</label>
+                </div>
+                
+                <div class="preset-buttons">
+                    <button class="preset-btn" onclick="loadPreset('numbers')">Números 1-8</button>
+                    <button class="preset-btn" onclick="loadPreset('colors')">Cores</button>
+                    <button class="preset-btn" onclick="loadPreset('food')">Comidas</button>
+                    <button class="preset-btn" onclick="loadPreset('activities')">Atividades</button>
+                    <button class="preset-btn" onclick="clearList()" style="background: #ff6b6b;">Nova Lista</button>
+                </div>
+            </div>
+            
+            <div class="input-section">
+                <h3>Itens na Roda</h3>
+                <div class="items-list" id="itemsList"></div>
+            </div>
+            
+            <div class="input-section">
+                <h3>🏆 Itens Sorteados</h3>
+                <div class="drawn-items" id="drawnItems">
+                    <p class="no-draws">Nenhum item sorteado ainda</p>
+                </div>
+                <div class="history-buttons">
+                    <button class="preset-btn" onclick="clearDrawnItems()" style="background: #764ba2;">Limpar Histórico</button>
+                    <button class="preset-btn restore-btn" id="restoreBtn" onclick="restoreDrawnItems()" style="background: #4ecdc4; display: none;">↩️ Restaurar Itens</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let items = ['Pizza', 'Hambúrguer', 'Sushi', 'Tacos', 'Sorvete', 'Salada'];
+        let drawnItems = [];
+        let isSpinning = false;
+
+        const wheel = document.getElementById('wheel');
+        const spinBtn = document.getElementById('spinBtn');
+        const result = document.getElementById('result');
+        const itemInput = document.getElementById('itemInput');
+        const addBtn = document.getElementById('addBtn');
+        const itemsList = document.getElementById('itemsList');
+        const drawnItemsContainer = document.getElementById('drawnItems');
+        const removeAfterDrawCheckbox = document.getElementById('removeAfterDraw');
+        const restoreBtn = document.getElementById('restoreBtn');
+
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
+            '#DDA0DD', '#98D8E8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+            '#F8C471', '#82E0AA', '#F1948A', '#85C1E9', '#D2B4DE'
+        ];
+
+        const presets = {
+            numbers: ['1', '2', '3', '4', '5', '6', '7', '8'],
+            colors: ['Vermelho', 'Azul', 'Verde', 'Amarelo', 'Roxo', 'Rosa'],
+            food: ['Pizza', 'Hambúrguer', 'Sushi', 'Tacos', 'Sorvete', 'Salada', 'Pasta', 'Frango'],
+            activities: ['Cinema', 'Parque', 'Praia', 'Shopping', 'Restaurante', 'Casa', 'Esportes', 'Leitura']
+        };
+
+        function updateWheel() {
+            wheel.innerHTML = '';
+            
+            if (items.length === 0) {
+                // Mostrar mensagem quando não há itens
+                const noItemsDiv = document.createElement('div');
+                noItemsDiv.className = 'no-items-message';
+                noItemsDiv.innerHTML = `
+                    <span class="emoji">🎯</span>
+                    Adicione itens para girar a roda!
+                `;
+                wheel.appendChild(noItemsDiv);
+                wheel.style.background = 'transparent';
+                return;
+            }
+
+            wheel.style.background = '';
+            const anglePerSegment = 360 / items.length;
+            
+            // Criar SVG para a roda
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('width', '100%');
+            svg.setAttribute('height', '100%');
+            svg.setAttribute('viewBox', '0 0 400 400');
+            svg.style.position = 'absolute';
+            svg.style.top = '0';
+            svg.style.left = '0';
+            
+            const centerX = 200;
+            const centerY = 200;
+            const radius = 190;
+            
+            items.forEach((item, index) => {
+                const startAngle = (index * anglePerSegment - 90) * (Math.PI / 180);
+                const endAngle = ((index + 1) * anglePerSegment - 90) * (Math.PI / 180);
+                
+                // Calcular pontos do arco
+                const x1 = centerX + radius * Math.cos(startAngle);
+                const y1 = centerY + radius * Math.sin(startAngle);
+                const x2 = centerX + radius * Math.cos(endAngle);
+                const y2 = centerY + radius * Math.sin(endAngle);
+                
+                const largeArc = anglePerSegment > 180 ? 1 : 0;
+                
+                // Criar path do segmento
+                const pathData = [
+                    `M ${centerX} ${centerY}`,
+                    `L ${x1} ${y1}`,
+                    `A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2}`,
+                    'Z'
+                ].join(' ');
+                
+                // Criar elemento path
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', colors[index % colors.length]);
+                path.setAttribute('stroke', 'rgba(255, 255, 255, 0.3)');
+                path.setAttribute('stroke-width', '2');
+                
+                svg.appendChild(path);
+                
+                // Adicionar texto
+                const textAngle = (startAngle + endAngle) / 2;
+                const textRadius = radius * 0.7;
+                const textX = centerX + textRadius * Math.cos(textAngle);
+                const textY = centerY + textRadius * Math.sin(textAngle);
+                
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', textX);
+                text.setAttribute('y', textY);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'central');
+                text.setAttribute('fill', 'white');
+                text.setAttribute('font-family', 'Arial, sans-serif');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('text-shadow', '1px 1px 2px rgba(0, 0, 0, 0.5)');
+                
+                // Ajustar tamanho da fonte baseado no número de itens
+                let fontSize;
+                if (items.length <= 6) {
+                    fontSize = '18px';
+                } else if (items.length <= 10) {
+                    fontSize = '16px';
+                } else {
+                    fontSize = '14px';
+                }
+                text.setAttribute('font-size', fontSize);
+                
+                // Rotacionar texto se necessário
+                const rotationAngle = (textAngle * 180 / Math.PI);
+                if (rotationAngle > 90 && rotationAngle < 270) {
+                    text.setAttribute('transform', `rotate(${rotationAngle + 180} ${textX} ${textY})`);
+                } else {
+                    text.setAttribute('transform', `rotate(${rotationAngle} ${textX} ${textY})`);
+                }
+                
+                text.textContent = item;
+                svg.appendChild(text);
+            });
+            
+            wheel.appendChild(svg);
+        }
+
+        function updateItemsList() {
+            itemsList.innerHTML = '';
+            
+            items.forEach((item, index) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+                itemDiv.innerHTML = `
+                    <span style="color: ${colors[index % colors.length]}; font-weight: bold;">●</span>
+                    <span>${item}</span>
+                    <button class="remove-btn" onclick="removeItem(${index})">Remover</button>
+                `;
+                itemsList.appendChild(itemDiv);
+            });
+        }
+
+        function addItem() {
+            const newItem = itemInput.value.trim();
+            if (newItem && items.length < 15) {
+                items.push(newItem);
+                itemInput.value = '';
+                updateWheel();
+                updateItemsList();
+            }
+        }
+
+        function removeItem(index) {
+            items.splice(index, 1);
+            updateWheel();
+            updateItemsList();
+        }
+
+        function loadPreset(presetName) {
+            items = [...presets[presetName]];
+            drawnItems = []; // Limpar histórico ao carregar preset
+            updateWheel();
+            updateItemsList();
+            updateDrawnItems();
+            result.style.display = 'none'; // Esconder resultado anterior
+        }
+
+        function clearList() {
+            items = [];
+            drawnItems = []; // Limpar histórico ao criar nova lista
+            updateWheel();
+            updateItemsList();
+            updateDrawnItems();
+            result.style.display = 'none';
+        }
+
+        function updateDrawnItems() {
+            drawnItemsContainer.innerHTML = '';
+            
+            if (drawnItems.length === 0) {
+                drawnItemsContainer.innerHTML = '<p class="no-draws">Nenhum item sorteado ainda</p>';
+                updateRestoreButtonVisibility();
+                return;
+            }
+            
+            drawnItems.forEach((drawn, index) => {
+                const drawnDiv = document.createElement('div');
+                drawnDiv.className = 'drawn-item';
+                drawnDiv.innerHTML = `
+                    <span>🏆 ${drawn.item}</span>
+                    <span class="drawn-time">${drawn.time}</span>
+                `;
+                drawnItemsContainer.appendChild(drawnDiv);
+            });
+            
+            updateRestoreButtonVisibility();
+        }
+
+        function clearDrawnItems() {
+            drawnItems = [];
+            updateDrawnItems();
+            updateRestoreButtonVisibility();
+        }
+
+        function updateRestoreButtonVisibility() {
+            // Mostrar botão apenas se checkbox estiver marcado e houver itens sorteados
+            if (removeAfterDrawCheckbox.checked && drawnItems.length > 0) {
+                restoreBtn.style.display = 'inline-block';
+            } else {
+                restoreBtn.style.display = 'none';
+            }
+        }
+
+        function restoreDrawnItems() {
+            if (drawnItems.length === 0) return;
+            
+            // Adicionar todos os itens sorteados de volta à roda
+            const itemsToRestore = drawnItems.map(drawn => drawn.item);
+            
+            // Evitar duplicatas - adicionar apenas itens que não estão na roda
+            itemsToRestore.forEach(item => {
+                if (!items.includes(item)) {
+                    items.push(item);
+                }
+            });
+            
+            // Limpar histórico após restaurar
+            drawnItems = [];
+            
+            // Atualizar tudo
+            updateWheel();
+            updateItemsList();
+            updateDrawnItems();
+            updateRestoreButtonVisibility();
+            
+            // Animação no botão
+            restoreBtn.classList.add('animate');
+            setTimeout(() => {
+                restoreBtn.classList.remove('animate');
+            }, 500);
+            
+            // Mostrar feedback visual
+            result.innerHTML = '🔄 Itens restaurados na roda!';
+            result.style.display = 'block';
+            setTimeout(() => {
+                result.style.display = 'none';
+            }, 2000);
+        }
+
+        function addToDrawnItems(item) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            drawnItems.unshift({
+                item: item,
+                time: timeString,
+                date: now
+            });
+            
+            // Manter apenas os últimos 20 itens
+            if (drawnItems.length > 20) {
+                drawnItems = drawnItems.slice(0, 20);
+            }
+            
+            updateDrawnItems();
+        }
+
+        function spin() {
+            if (isSpinning || items.length === 0) return;
+            
+            isSpinning = true;
+            spinBtn.disabled = true;
+            result.style.display = 'none';
+            
+            // Resetar a rotação antes de girar
+            wheel.style.transition = 'none';
+            wheel.style.transform = 'rotate(0deg)';
+            
+            // Forçar o reflow para aplicar o reset
+            wheel.offsetHeight;
+            
+            // Calcular rotação
+            const spins = Math.floor(Math.random() * 5) + 5; // 5-9 voltas completas
+            const finalAngle = Math.floor(Math.random() * 360);
+            const totalRotation = spins * 360 + finalAngle;
+            
+            // Aplicar a animação
+            setTimeout(() => {
+                wheel.style.transition = 'transform 4s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                wheel.style.transform = `rotate(${totalRotation}deg)`;
+            }, 10);
+            
+            // Calcular resultado
+            const segmentAngle = 360 / items.length;
+            const normalizedAngle = (360 - (finalAngle % 360)) % 360;
+            const winningIndex = Math.floor(normalizedAngle / segmentAngle);
+            const winner = items[winningIndex];
+            
+            // Mostrar resultado após a animação
+            setTimeout(() => {
+                result.textContent = `🎉 Resultado: ${winner} 🎉`;
+                result.style.display = 'block';
+                
+                // Adicionar ao histórico de sorteados
+                addToDrawnItems(winner);
+                
+                // Remover item se checkbox estiver marcado
+                if (removeAfterDrawCheckbox.checked) {
+                    const winnerIndex = items.indexOf(winner);
+                    if (winnerIndex > -1) {
+                        items.splice(winnerIndex, 1);
+                        updateWheel();
+                        updateItemsList();
+                        
+                        // Verificar se ainda há itens para sortear
+                        if (items.length === 0) {
+                            setTimeout(() => {
+                                result.innerHTML = `🎉 ${winner} 🎉<br><small>Todos os itens foram sorteados!</small>`;
+                            }, 500);
+                        }
+                    }
+                }
+                
+                isSpinning = false;
+                spinBtn.disabled = false;
+            }, 4000);
+        }
+
+        // Event listeners
+        spinBtn.addEventListener('click', spin);
+        addBtn.addEventListener('click', addItem);
+        itemInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addItem();
+        });
+
+        // Atualizar visibilidade do botão restaurar quando checkbox mudar
+        removeAfterDrawCheckbox.addEventListener('change', updateRestoreButtonVisibility);
+
+        // Inicializar
+        updateWheel();
+        updateItemsList();
+        updateDrawnItems();
+        updateRestoreButtonVisibility();
+    </script>
+</body>
+</html>
