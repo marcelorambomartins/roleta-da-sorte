@@ -35,12 +35,33 @@
                     <label for="removeAfterDraw" class="checkbox-label">🚫 Remover item após sorteio</label>
                 </div>
                 
-                <div class="preset-buttons">
-                    <button class="preset-btn" onclick="loadPreset('numbers')">Números 1-8</button>
-                    <button class="preset-btn" onclick="loadPreset('colors')">Cores</button>
-                    <button class="preset-btn" onclick="loadPreset('food')">Comidas</button>
-                    <button class="preset-btn" onclick="loadPreset('activities')">Atividades</button>
-                    <button class="preset-btn" onclick="clearList()" style="background: #ff6b6b;">Nova Lista</button>
+                <!-- NOVA SEÇÃO DE ROLETAS PRÉ-DEFINIDAS -->
+                <div class="presets-section">
+                    <h4>Roletas Pré-definidas</h4>
+                    <p style="font-size: 14px; opacity: 0.9; margin-bottom: 15px;">Escolha uma roleta pronta para começar rapidamente:</p>
+                    
+                    <div class="preset-buttons">
+                        <button class="preset-btn" id="numbersBtn">
+                            <div>🔢 Números</div>
+                            <small style="opacity: 0.8;">1 até 8</small>
+                        </button>
+                        <button class="preset-btn" id="peopleBtn">
+                            <div>👥 Pessoas</div>
+                            <small style="opacity: 0.8;">10 nomes</small>
+                        </button>
+                        <button class="preset-btn" id="foodBtn">
+                            <div>🍕 Comidas</div>
+                            <small style="opacity: 0.8;">8 opções</small>
+                        </button>
+                        <button class="preset-btn" id="activitiesBtn">
+                            <div>🎯 Atividades</div>
+                            <small style="opacity: 0.8;">8 opções</small>
+                        </button>
+                    </div>
+                    
+                    <div class="new-list-section">
+                        <button class="new-list-btn" id="clearBtn">NOVA LISTA VAZIA</button>
+                    </div>
                 </div>
             </div>
             
@@ -55,8 +76,8 @@
                     <p class="no-draws">Nenhum item sorteado ainda</p>
                 </div>
                 <div class="history-buttons">
-                    <button class="preset-btn" onclick="clearDrawnItems()" style="background: #764ba2;">Limpar Histórico</button>
-                    <button class="preset-btn restore-btn" id="restoreBtn" onclick="restoreDrawnItems()" style="background: #4ecdc4; display: none;">↩️ Restaurar Itens</button>
+                    <button class="preset-btn" id="clearHistoryBtn" style="background: #764ba2;">Limpar Histórico</button>
+                    <button class="restore-btn" id="restoreBtn" style="display: none;">↩️ Restaurar Itens</button>
                 </div>
             </div>
         </div>
@@ -101,7 +122,7 @@
         
         <div class="footer-bottom">
             <p>&copy; 2025 Roleta da Sorte. Desenvolvido com ❤️ para diversão e praticidade.</p>
-            <p class="footer-tip">💡 <strong>Dica:</strong> </p>
+            <p class="footer-tip">💡 <strong>Dica:</strong> Use as roletas pré-definidas para começar rapidamente!</p>
         </div>
     </footer>
 
