@@ -522,9 +522,68 @@
             }
 
             wheel.style.background = '';
+            
+            // Caso especial: apenas 1 item - criar círculo completo
+            if (items.length === 1) {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('width', '100%');
+                svg.setAttribute('height', '100%');
+                svg.setAttribute('viewBox', '0 0 400 400');
+                svg.style.position = 'absolute';
+                svg.style.top = '0';
+                svg.style.left = '0';
+                
+                // Criar filtro para sombra do texto
+                const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+                filter.setAttribute('id', 'textShadow');
+                filter.setAttribute('x', '-20%');
+                filter.setAttribute('y', '-20%');
+                filter.setAttribute('width', '140%');
+                filter.setAttribute('height', '140%');
+                
+                const feDropShadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
+                feDropShadow.setAttribute('dx', '1');
+                feDropShadow.setAttribute('dy', '1');
+                feDropShadow.setAttribute('stdDeviation', '2');
+                feDropShadow.setAttribute('flood-color', 'rgba(0,0,0,0.5)');
+                
+                filter.appendChild(feDropShadow);
+                defs.appendChild(filter);
+                svg.appendChild(defs);
+                
+                // Criar círculo completo
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', '200');
+                circle.setAttribute('cy', '200');
+                circle.setAttribute('r', '190');
+                circle.setAttribute('fill', colors[0]);
+                circle.setAttribute('stroke', 'rgba(255, 255, 255, 0.3)');
+                circle.setAttribute('stroke-width', '2');
+                
+                svg.appendChild(circle);
+                
+                // Adicionar texto centralizado
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '200');
+                text.setAttribute('y', '200');
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'central');
+                text.setAttribute('fill', 'white');
+                text.setAttribute('font-family', 'Arial, sans-serif');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('font-size', '24px');
+                text.setAttribute('filter', 'url(#textShadow)');
+                text.textContent = items[0];
+                
+                svg.appendChild(text);
+                wheel.appendChild(svg);
+                return;
+            }
+
+            // Múltiplos itens - criar segmentos
             const anglePerSegment = 360 / items.length;
             
-            // Criar SVG para a roda
             const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
             svg.setAttribute('width', '100%');
             svg.setAttribute('height', '100%');
@@ -532,6 +591,25 @@
             svg.style.position = 'absolute';
             svg.style.top = '0';
             svg.style.left = '0';
+            
+            // Criar filtro para sombra do texto (usado em todos os casos)
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+            filter.setAttribute('id', 'textShadow');
+            filter.setAttribute('x', '-20%');
+            filter.setAttribute('y', '-20%');
+            filter.setAttribute('width', '140%');
+            filter.setAttribute('height', '140%');
+            
+            const feDropShadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
+            feDropShadow.setAttribute('dx', '1');
+            feDropShadow.setAttribute('dy', '1');
+            feDropShadow.setAttribute('stdDeviation', '2');
+            feDropShadow.setAttribute('flood-color', 'rgba(0,0,0,0.5)');
+            
+            filter.appendChild(feDropShadow);
+            defs.appendChild(filter);
+            svg.appendChild(defs);
             
             const centerX = 200;
             const centerY = 200;
@@ -580,7 +658,7 @@
                 text.setAttribute('fill', 'white');
                 text.setAttribute('font-family', 'Arial, sans-serif');
                 text.setAttribute('font-weight', 'bold');
-                text.setAttribute('text-shadow', '1px 1px 2px rgba(0, 0, 0, 0.5)');
+                text.setAttribute('filter', 'url(#textShadow)');
                 
                 // Ajustar tamanho da fonte baseado no número de itens
                 let fontSize;
