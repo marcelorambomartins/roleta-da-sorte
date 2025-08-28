@@ -52,24 +52,6 @@ function updateWheel() {
         svg.style.top = '0';
         svg.style.left = '0';
         
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
-        filter.setAttribute('id', 'textShadow');
-        filter.setAttribute('x', '-20%');
-        filter.setAttribute('y', '-20%');
-        filter.setAttribute('width', '140%');
-        filter.setAttribute('height', '140%');
-        
-        const feDropShadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
-        feDropShadow.setAttribute('dx', '1');
-        feDropShadow.setAttribute('dy', '1');
-        feDropShadow.setAttribute('stdDeviation', '2');
-        feDropShadow.setAttribute('flood-color', 'rgba(0,0,0,0.5)');
-        
-        filter.appendChild(feDropShadow);
-        defs.appendChild(filter);
-        svg.appendChild(defs);
-        
         const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
         circle.setAttribute('cx', '200');
         circle.setAttribute('cy', '200');
@@ -89,7 +71,6 @@ function updateWheel() {
         text.setAttribute('font-family', 'Arial, sans-serif');
         text.setAttribute('font-weight', 'bold');
         text.setAttribute('font-size', '24px');
-        text.setAttribute('filter', 'url(#textShadow)');
         text.textContent = items[0];
         
         svg.appendChild(text);
@@ -106,24 +87,6 @@ function updateWheel() {
     svg.style.position = 'absolute';
     svg.style.top = '0';
     svg.style.left = '0';
-    
-    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-    const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
-    filter.setAttribute('id', 'textShadow');
-    filter.setAttribute('x', '-20%');
-    filter.setAttribute('y', '-20%');
-    filter.setAttribute('width', '140%');
-    filter.setAttribute('height', '140%');
-    
-    const feDropShadow = document.createElementNS('http://www.w3.org/2000/svg', 'feDropShadow');
-    feDropShadow.setAttribute('dx', '1');
-    feDropShadow.setAttribute('dy', '1');
-    feDropShadow.setAttribute('stdDeviation', '2');
-    feDropShadow.setAttribute('flood-color', 'rgba(0,0,0,0.5)');
-    
-    filter.appendChild(feDropShadow);
-    defs.appendChild(filter);
-    svg.appendChild(defs);
     
     const centerX = 200;
     const centerY = 200;
@@ -168,7 +131,6 @@ function updateWheel() {
         text.setAttribute('fill', 'white');
         text.setAttribute('font-family', 'Arial, sans-serif');
         text.setAttribute('font-weight', 'bold');
-        text.setAttribute('filter', 'url(#textShadow)');
         
         let fontSize;
         if (items.length <= 6) {

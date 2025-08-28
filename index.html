@@ -7,19 +7,49 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>🎯 Roleta da Sorte</h1>
     <div class="container">
-        <h1>🎯 Roleta da Sorte</h1>
-        
-        <div class="wheel-container">
-            <div class="wheel-wrapper">
-                <div class="pointer"></div>
-                <div class="wheel" id="wheel"></div>
-                <div class="wheel-center">🎲</div>
+
+        <div class="presets-section">
+            <h4>Roletas Pré-definidas</h4>
+            <p style="font-size: 14px; opacity: 0.9; margin-bottom: 15px;">Escolha uma roleta pronta para começar rapidamente:</p>
+            
+            <div class="preset-buttons">
+                <button class="preset-btn" id="peopleBtn">
+                    <div>👥 Pessoas</div>
+                    <small style="opacity: 0.8;">10 nomes</small>
+                </button>
+                <button class="preset-btn" id="numbersBtn">
+                    <div>🔢 Números</div>
+                    <small style="opacity: 0.8;">1 até 8</small>
+                </button>
+                <button class="preset-btn" id="foodBtn">
+                    <div>🍕 Comidas</div>
+                    <small style="opacity: 0.8;">8 opções</small>
+                </button>
+                <button class="preset-btn" id="activitiesBtn">
+                    <div>🎯 Atividades</div>
+                    <small style="opacity: 0.8;">8 opções</small>
+                </button>
+                <button class="preset-btn new-list-btn" id="clearBtn">
+                    <div>🗑️ Nova Lista</div>
+                    <small style="opacity: 0.8;">Vazia</small>
+                </button>
             </div>
-            
-            <button class="spin-btn" id="spinBtn">GIRAR A ROLETA!</button>
-            
-            <div class="result" id="result"></div>
+        </div>
+
+        <div class="left-section">
+            <div class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div class="pointer"></div>
+                    <div class="wheel" id="wheel"></div>
+                    <div class="wheel-center">🎲</div>
+                </div>
+                
+                <button class="spin-btn" id="spinBtn">GIRAR A ROLETA!</button>
+                
+                <div class="result" id="result"></div>
+            </div>
         </div>
         
         <div class="controls">
@@ -29,45 +59,15 @@
                     <input type="text" class="item-input" id="itemInput" placeholder="Digite um item..." maxlength="30">
                     <button class="add-btn" id="addBtn">Adicionar</button>
                 </div>
-                
-                <div class="checkbox-option">
-                    <input type="checkbox" id="removeAfterDraw" class="remove-checkbox">
-                    <label for="removeAfterDraw" class="checkbox-label">🚫 Remover item após sorteio</label>
-                </div>
-                
-                <!-- NOVA SEÇÃO DE ROLETAS PRÉ-DEFINIDAS -->
-                <div class="presets-section">
-                    <h4>Roletas Pré-definidas</h4>
-                    <p style="font-size: 14px; opacity: 0.9; margin-bottom: 15px;">Escolha uma roleta pronta para começar rapidamente:</p>
-                    
-                    <div class="preset-buttons">
-                        <button class="preset-btn" id="numbersBtn">
-                            <div>🔢 Números</div>
-                            <small style="opacity: 0.8;">1 até 8</small>
-                        </button>
-                        <button class="preset-btn" id="peopleBtn">
-                            <div>👥 Pessoas</div>
-                            <small style="opacity: 0.8;">10 nomes</small>
-                        </button>
-                        <button class="preset-btn" id="foodBtn">
-                            <div>🍕 Comidas</div>
-                            <small style="opacity: 0.8;">8 opções</small>
-                        </button>
-                        <button class="preset-btn" id="activitiesBtn">
-                            <div>🎯 Atividades</div>
-                            <small style="opacity: 0.8;">8 opções</small>
-                        </button>
-                    </div>
-                    
-                    <div class="new-list-section">
-                        <button class="new-list-btn" id="clearBtn">NOVA LISTA VAZIA</button>
-                    </div>
-                </div>
             </div>
             
             <div class="input-section">
                 <h3>Itens na Roleta</h3>
                 <div class="items-list" id="itemsList"></div>
+                <div class="checkbox-option">
+                    <input type="checkbox" id="removeAfterDraw" class="remove-checkbox">
+                    <label for="removeAfterDraw" class="checkbox-label">🚫 Remover item após sorteio</label>
+                </div>
             </div>
             
             <div class="input-section">
