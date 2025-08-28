@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spin the Wheel - Roda da Sorte</title>
+    <title>Roleta da Sorte</title>
     <style>
         * {
             margin: 0;
@@ -423,7 +423,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎯 Roda da Sorte</h1>
+        <h1>🎯 Roleta da Sorte</h1>
         
         <div class="wheel-container">
             <div class="wheel-wrapper">
@@ -432,7 +432,7 @@
                 <div class="wheel-center">🎲</div>
             </div>
             
-            <button class="spin-btn" id="spinBtn">GIRAR A RODA!</button>
+            <button class="spin-btn" id="spinBtn">GIRAR A ROLETA!</button>
             
             <div class="result" id="result"></div>
         </div>
@@ -460,7 +460,7 @@
             </div>
             
             <div class="input-section">
-                <h3>Itens na Roda</h3>
+                <h3>Itens na Roleta</h3>
                 <div class="items-list" id="itemsList"></div>
             </div>
             
@@ -514,7 +514,7 @@
                 noItemsDiv.className = 'no-items-message';
                 noItemsDiv.innerHTML = `
                     <span class="emoji">🎯</span>
-                    Adicione itens para girar a roda!
+                    Adicione itens para girar a roleta!
                 `;
                 wheel.appendChild(noItemsDiv);
                 wheel.style.background = 'transparent';
@@ -778,7 +778,7 @@
             // Adicionar todos os itens sorteados de volta à roda
             const itemsToRestore = drawnItems.map(drawn => drawn.item);
             
-            // Evitar duplicatas - adicionar apenas itens que não estão na roda
+            // Evitar duplicatas - adicionar apenas itens que não estão na roleta
             itemsToRestore.forEach(item => {
                 if (!items.includes(item)) {
                     items.push(item);
@@ -801,7 +801,7 @@
             }, 500);
             
             // Mostrar feedback visual
-            result.innerHTML = '🔄 Itens restaurados na roda!';
+            result.innerHTML = '🔄 Itens restaurados na roleta!';
             result.style.display = 'block';
             setTimeout(() => {
                 result.style.display = 'none';
