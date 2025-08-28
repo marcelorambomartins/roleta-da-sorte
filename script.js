@@ -1,6 +1,7 @@
 let items = ['Pizza', 'Hambúrguer', 'Sushi', 'Tacos', 'Sorvete', 'Salada'];
 let drawnItems = [];
 let isSpinning = false;
+let lastWinnerToRemove = null;
 
 const wheel = document.getElementById('wheel');
 const spinBtn = document.getElementById('spinBtn');
@@ -240,6 +241,7 @@ function removeItem(index) {
 function loadPreset(presetName) {
     items = [...presets[presetName]];
     drawnItems = []; // Limpar histórico ao carregar preset
+    lastWinnerToRemove = null; // Limpar item pendente para remoção
     updateWheel();
     updateItemsList();
     updateDrawnItems();
@@ -249,6 +251,7 @@ function loadPreset(presetName) {
 function clearList() {
     items = [];
     drawnItems = []; // Limpar histórico ao criar nova lista
+    lastWinnerToRemove = null; // Limpar item pendente para remoção
     updateWheel();
     updateItemsList();
     updateDrawnItems();
@@ -305,8 +308,9 @@ function restoreDrawnItems() {
         }
     });
     
-    // Limpar histórico após restaurar
+    // Limpar histórico e item pendente após restaurar
     drawnItems = [];
+    lastWinnerToRemove = null;
     
     // Atualizar tudo
     updateWheel();
@@ -352,6 +356,24 @@ function addToDrawnItems(item) {
 function spin() {
     if (isSpinning || items.length === 0) return;
     
+    // Remover item do sorteio anterior se o checkbox estiver marcado
+    if (removeAfterDrawCheckbox.checked && lastWinnerToRemove) {
+        const indexToRemove = items.indexOf(lastWinnerToRemove);
+        if (indexToRemove > -1) {
+            items.splice(indexToRemove, 1);
+            updateWheel();
+            updateItemsList();
+        }
+        lastWinnerToRemove = null;
+        
+        // Se não há mais itens após remover, sair da função
+        if (items.length === 0) {
+            result.innerHTML = '🎯 Todos os itens foram sorteados!<br><small>Adicione novos itens para continuar</small>';
+            result.style.display = 'block';
+            return;
+        }
+    }
+    
     isSpinning = true;
     spinBtn.disabled = true;
     result.style.display = 'none';
@@ -388,21 +410,9 @@ function spin() {
         // Adicionar ao histórico de sorteados
         addToDrawnItems(winner);
         
-        // Remover item se checkbox estiver marcado
+        // Marcar item para remoção no próximo giro se checkbox estiver marcado
         if (removeAfterDrawCheckbox.checked) {
-            const winnerIndex = items.indexOf(winner);
-            if (winnerIndex > -1) {
-                items.splice(winnerIndex, 1);
-                updateWheel();
-                updateItemsList();
-                
-                // Verificar se ainda há itens para sortear
-                if (items.length === 0) {
-                    setTimeout(() => {
-                        result.innerHTML = `🎉 ${winner} 🎉<br><small>Todos os itens foram sorteados!</small>`;
-                    }, 500);
-                }
-            }
+            lastWinnerToRemove = winner;
         }
         
         isSpinning = false;
