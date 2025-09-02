@@ -3,107 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roleta da Sorte</title>
+    
+    <!-- SEO Meta Tags -->
+    <title>Roleta da Sorte Online - Sorteio Rápido e Fácil | Ferramenta Gratuita</title>
+    <meta name="description" content="Roleta da Sorte online gratuita para sorteios rápidos. Ferramenta interativa para decisões, sorteios de nomes, números e muito mais. Use roletas pré-prontas ou crie a sua!">
+    <meta name="keywords" content="roleta da sorte, sorteio online, roleta online, sorteio de nomes, decidir online, ferramenta de sorteio, roleta interativa, sorteio gratis">
+    <meta name="author" content="Roleta da Sorte">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Roleta da Sorte Online - Sorteio Rápido e Fácil">
+    <meta property="og:description" content="Ferramenta gratuita para sorteios online. Roleta interativa com opções pré-definidas e personalizáveis. Perfeita para decisões rápidas!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://seudominio.com">
+    <meta property="og:image" content="https://seudominio.com/images/roleta-preview.jpg">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="Roleta da Sorte">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Roleta da Sorte Online - Sorteio Rápido e Fácil">
+    <meta name="twitter:description" content="Ferramenta gratuita para sorteios online. Roleta interativa com opções pré-definidas e personalizáveis.">
+    <meta name="twitter:image" content="https://seudominio.com/images/roleta-preview.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://seudominio.com">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Roleta da Sorte",
+      "description": "Ferramenta online gratuita para sorteios e decisões aleatórias usando uma roleta interativa",
+      "url": "https://seudominio.com",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      },
+      "featureList": [
+        "Roleta interativa online",
+        "Sorteio de nomes e números",
+        "Roletas pré-definidas",
+        "Histórico de sorteios",
+        "Design responsivo",
+        "Ferramenta gratuita"
+      ],
+      "inLanguage": "pt-BR",
+      "isAccessibleForFree": true,
+      "creator": {
+        "@type": "Organization",
+        "name": "Roleta da Sorte"
+      }
+    }
+    </script>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K93XXWDY2L"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
+        
         gtag('config', 'G-K93XXWDY2L');
     </script>
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>🎯 Roleta da Sorte</h1>
-    <div class="container">
+    <!-- Header com H1 otimizado -->
+    <header>
+        <h1>🎯 Roleta da Sorte Online - Ferramenta Gratuita para Sorteios</h1>
+        <p class="subtitle">A maneira mais divertida e rápida de tomar decisões e fazer sorteios online!</p>
+    </header>
 
-        <div class="presets-section">
-            <h4>Roletas Pré-definidas</h4>
-            <p style="font-size: 14px; opacity: 0.9; margin-bottom: 15px;">Escolha uma roleta pronta para começar rapidamente:</p>
+    <main class="container">
+        <!-- Seção de roletas pré-definidas com conteúdo otimizado -->
+        <section class="presets-section" aria-label="Roletas Pré-definidas">
+            <h2>🎲 Roletas Pré-definidas para Uso Imediato</h2>
+            <p>Escolha uma de nossas roletas prontas para começar seu sorteio rapidamente:</p>
             
             <div class="preset-buttons">
-                <button class="preset-btn" id="peopleBtn">
+                <button class="preset-btn" id="peopleBtn" aria-label="Roleta com 10 nomes de pessoas">
                     <div>👥 Pessoas</div>
-                    <small style="opacity: 0.8;">10 nomes</small>
+                    <small>10 nomes</small>
                 </button>
-                <button class="preset-btn" id="numbersBtn">
+                <button class="preset-btn" id="numbersBtn" aria-label="Roleta com números de 1 a 8">
                     <div>🔢 Números</div>
-                    <small style="opacity: 0.8;">1 até 8</small>
+                    <small>1 até 8</small>
                 </button>
-                <button class="preset-btn" id="foodBtn">
+                <button class="preset-btn" id="foodBtn" aria-label="Roleta com 8 opções de comida">
                     <div>🍕 Comidas</div>
-                    <small style="opacity: 0.8;">8 opções</small>
+                    <small>8 opções</small>
                 </button>
-                <button class="preset-btn" id="activitiesBtn">
+                <button class="preset-btn" id="activitiesBtn" aria-label="Roleta com 8 atividades">
                     <div>🎯 Atividades</div>
-                    <small style="opacity: 0.8;">8 opções</small>
+                    <small>8 opções</small>
                 </button>
-                <button class="preset-btn new-list-btn" id="clearBtn">
+                <button class="preset-btn new-list-btn" id="clearBtn" aria-label="Criar nova lista vazia">
                     <div>🗑️ Nova Lista</div>
-                    <small style="opacity: 0.8;">Vazia</small>
+                    <small>Vazia</small>
                 </button>
             </div>
-        </div>
+        </section>
 
-        <div class="left-section">
+        <!-- Seção principal da roleta -->
+        <section class="left-section" aria-label="Roleta Interativa">
             <div class="wheel-container">
+                <h2 class="sr-only">Roleta de Sorteio Interativa</h2>
                 <div class="wheel-wrapper">
-                    <div class="pointer"></div>
-                    <div class="wheel" id="wheel"></div>
-                    <div class="wheel-center">🎲</div>
+                    <div class="pointer" aria-hidden="true"></div>
+                    <div class="wheel" id="wheel" role="img" aria-label="Roleta de sorteio"></div>
+                    <div class="wheel-center" aria-hidden="true">🎲</div>
                 </div>
                 
-                <button class="spin-btn" id="spinBtn">GIRAR A ROLETA!</button>
+                <button class="spin-btn" id="spinBtn" aria-label="Girar a roleta para sortear">GIRAR A ROLETA!</button>
                 
-                <div class="result" id="result"></div>
+                <div class="result" id="result" role="status" aria-live="polite"></div>
             </div>
-        </div>
+        </section>
         
-        <div class="controls">
-            <div class="input-section">
-                <h3>Adicionar Item</h3>
+        <!-- Seção de controles -->
+        <aside class="controls" aria-label="Controles da Roleta">
+            <section class="input-section">
+                <h3>➕ Adicionar Item ao Sorteio</h3>
                 <div class="input-group">
-                    <input type="text" class="item-input" id="itemInput" placeholder="Digite um item..." maxlength="30">
-                    <button class="add-btn" id="addBtn">Adicionar</button>
+                    <label for="itemInput" class="sr-only">Digite um item para adicionar à roleta</label>
+                    <input type="text" class="item-input" id="itemInput" placeholder="Digite um item..." maxlength="30" aria-describedby="item-help">
+                    <button class="add-btn" id="addBtn" aria-label="Adicionar item à roleta">Adicionar</button>
                 </div>
-            </div>
+                <small id="item-help">Máximo de 30 caracteres por item</small>
+            </section>
             
-            <div class="input-section">
-                <h3>Itens na Roleta</h3>
-                <div class="items-list" id="itemsList"></div>
+            <section class="input-section">
+                <h3>📋 Itens na Roleta</h3>
+                <div class="items-list" id="itemsList" role="list" aria-label="Lista de itens na roleta"></div>
                 <div class="checkbox-option">
                     <input type="checkbox" id="removeAfterDraw" class="remove-checkbox">
                     <label for="removeAfterDraw" class="checkbox-label">🚫 Remover item após sorteio</label>
                 </div>
-            </div>
+            </section>
             
-            <div class="input-section">
-                <h3>🏆 Itens Sorteados</h3>
-                <div class="drawn-items" id="drawnItems">
+            <section class="input-section">
+                <h3>🏆 Histórico de Sorteios</h3>
+                <div class="drawn-items" id="drawnItems" role="log" aria-label="Histórico de itens sorteados">
                     <p class="no-draws">Nenhum item sorteado ainda</p>
                 </div>
                 <div class="history-buttons">
-                    <button class="preset-btn" id="clearHistoryBtn" style="background: #764ba2;">Limpar Histórico</button>
-                    <button class="restore-btn" id="restoreBtn" style="display: none;">↩️ Restaurar Itens</button>
+                    <button class="preset-btn" id="clearHistoryBtn" aria-label="Limpar histórico de sorteios">Limpar Histórico</button>
+                    <button class="restore-btn" id="restoreBtn" style="display: none;" aria-label="Restaurar itens removidos">↩️ Restaurar Itens</button>
                 </div>
-            </div>
+            </section>
+        </aside>
+    </main>
+
+    <!-- Seção de conteúdo adicional para SEO -->
+    <section class="seo-content" aria-label="Informações sobre a Roleta da Sorte">
+        <div class="content-wrapper">
+            <article>
+                <h2>Como Usar a Roleta da Sorte Online</h2>
+                <p>Nossa <strong>roleta da sorte online</strong> é uma ferramenta gratuita e intuitiva para fazer sorteios rápidos e tomar decisões de forma aleatória. Seja para escolher um nome em uma lista, decidir o que comer ou selecionar uma atividade, nossa roleta interativa torna o processo divertido e imparcial.</p>
+                
+                <h3>Principais Recursos</h3>
+                <ul>
+                    <li><strong>Roletas Pré-definidas:</strong> Use nossas opções prontas com nomes, números, comidas e atividades</li>
+                    <li><strong>Personalização Total:</strong> Adicione seus próprios itens e crie listas personalizadas</li>
+                    <li><strong>Histórico Completo:</strong> Acompanhe todos os resultados dos seus sorteios</li>
+                    <li><strong>Remoção Automática:</strong> Opção para remover itens após serem sorteados</li>
+                    <li><strong>Design Responsivo:</strong> Funciona perfeitamente em celulares, tablets e computadores</li>
+                </ul>
+                
+                <h3>Casos de Uso da Roleta de Sorteio</h3>
+                <p>A <strong>roleta online</strong> é perfeita para diversas situações:</p>
+                <ul>
+                    <li>Sorteio de nomes para apresentações ou atividades em grupo</li>
+                    <li>Decisão do que comer quando não consegue escolher</li>
+                    <li>Seleção aleatória de atividades de lazer</li>
+                    <li>Distribuição imparcial de tarefas</li>
+                    <li>Jogos e dinâmicas em festas ou eventos</li>
+                    <li>Sorteios educacionais em sala de aula</li>
+                </ul>
+            </article>
         </div>
-    </div>
+    </section>
 
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
                 <h4>🎯 Roleta da Sorte</h4>
-                <p>A forma mais divertida de tomar decisões!</p>
+                <p>A ferramenta online gratuita mais divertida para sorteios e decisões aleatórias!</p>
             </div>
             
             <div class="footer-section">
                 <h4>✨ Recursos</h4>
                 <ul>
-                    <li>Roleta interativa</li>
-                    <li>Roletas pre-prontas</li>
+                    <li>Roleta interativa gratuita</li>
+                    <li>Roletas pré-definidas</li>
                     <li>Histórico de sorteios</li>
                     <li>Design responsivo</li>
                 </ul>
@@ -115,7 +219,7 @@
                     <li>Adicione seus itens</li>
                     <li>Clique em "Girar a Roleta"</li>
                     <li>Veja o resultado!</li>
-                    <li>Use as roletas pre-prontas para começar rápido</li>
+                    <li>Use as roletas prontas para começar rápido</li>
                 </ul>
             </div>
             
@@ -130,8 +234,8 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2025 Roleta da Sorte. Desenvolvido com ❤️ para diversão e praticidade.</p>
-            <p class="footer-tip">💡 <strong>Dica:</strong> Use as roletas pré-definidas para começar rapidamente!</p>
+            <p>&copy; 2025 Roleta da Sorte. Ferramenta gratuita desenvolvida com ❤️ para facilitar suas decisões.</p>
+            <p class="footer-tip">💡 <strong>Dica:</strong> Use as roletas pré-definidas para começar rapidamente seus sorteios!</p>
         </div>
     </footer>
 
