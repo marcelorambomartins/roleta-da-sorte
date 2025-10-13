@@ -156,6 +156,11 @@
                     <button class="add-btn" id="addBtn" aria-label="Adicionar item à roleta">Adicionar</button>
                 </div>
                 <small id="item-help">Máximo de 30 caracteres por item</small>
+                
+                <!-- NOVO: Botão para importar lista -->
+                <button class="import-list-btn" id="importListBtn" aria-label="Importar lista de itens">
+                    📋 Importar Lista
+                </button>
             </section>
             
             <section class="input-section">
@@ -179,6 +184,43 @@
             </section>
         </aside>
     </main>
+
+    <!-- NOVO: Modal para importar lista -->
+    <div class="modal" id="importModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📋 Importar Lista de Itens</h3>
+                <button class="modal-close" id="closeModalBtn" aria-label="Fechar modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <p class="modal-description">
+                    Cole sua lista abaixo. Você pode separar os itens por:
+                </p>
+                <ul class="modal-tips">
+                    <li>✓ Uma opção por linha</li>
+                    <li>✓ Vírgulas (Ana, Bruno, Carlos)</li>
+                    <li>✓ Ponto e vírgula (Ana; Bruno; Carlos)</li>
+                </ul>
+                
+                <textarea 
+                    id="bulkInput" 
+                    class="bulk-textarea" 
+                    placeholder="Exemplo:&#10;Ana&#10;Bruno&#10;Carlos&#10;&#10;ou&#10;&#10;Ana, Bruno, Carlos"
+                    rows="10"
+                ></textarea>
+                
+                <div class="modal-info">
+                    <small>💡 Dica: Máximo de 1000 itens. Itens com mais de 30 caracteres serão cortados.</small>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn cancel-btn" id="cancelImportBtn">Cancelar</button>
+                <button class="modal-btn import-btn" id="confirmImportBtn">✓ Importar Itens</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Seção de conteúdo adicional para SEO -->
     <section class="seo-content" aria-label="Informações sobre a Roleta da Sorte">
@@ -240,7 +282,7 @@
             <div class="footer-section">
                 <h4>🔧 Configurações</h4>
                 <ul>
-                    <li>Máximo de 15 itens</li>
+                    <li>Máximo de 1000 itens</li>
                     <li>Remoção após sorteio</li>
                     <li>Restaurar itens removidos</li>
                 </ul>

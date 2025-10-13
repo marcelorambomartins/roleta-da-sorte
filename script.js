@@ -12,7 +12,15 @@ const itemsList = document.getElementById('itemsList');
 const drawnItemsContainer = document.getElementById('drawnItems');
 const removeAfterDrawCheckbox = document.getElementById('removeAfterDraw');
 const restoreBtn = document.getElementById('restoreBtn');
-const wheelCenter = document.querySelector('.wheel-center'); // Adicionar referência ao centro
+const wheelCenter = document.querySelector('.wheel-center');
+
+// Elementos do modal
+const importModal = document.getElementById('importModal');
+const importListBtn = document.getElementById('importListBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const cancelImportBtn = document.getElementById('cancelImportBtn');
+const confirmImportBtn = document.getElementById('confirmImportBtn');
+const bulkInput = document.getElementById('bulkInput');
 
 const colors = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
@@ -174,11 +182,13 @@ function updateItemsList() {
 
 function addItem() {
     const newItem = itemInput.value.trim();
-    if (newItem) {
-        items.push(newItem);
+    if (newItem && items.length < 1000) {
+        items.push(newItem.substring(0, 30));
         itemInput.value = '';
         updateWheel();
         updateItemsList();
+    } else if (items.length >= 1000) {
+        alert('Máximo de 1000 itens atingido!');
     }
 }
 
@@ -318,7 +328,6 @@ function spin() {
     spinBtn.disabled = true;
     result.style.display = 'none';
     
-    // Adicionar feedback visual ao centro da roleta
     wheelCenter.style.transform = 'translate(-50%, -50%) scale(0.9)';
     setTimeout(() => {
         wheelCenter.style.transform = 'translate(-50%, -50%) scale(1)';
@@ -358,19 +367,101 @@ function spin() {
     }, 4000);
 }
 
+// Funções do modal de importação
+function openImportModal() {
+    importModal.style.display = 'flex';
+    bulkInput.value = '';
+    bulkInput.focus();
+}
+
+function closeImportModal() {
+    importModal.style.display = 'none';
+    bulkInput.value = '';
+}
+
+function importBulkItems() {
+    const text = bulkInput.value.trim();
+    
+    if (!text) {
+        alert('Por favor, digite ou cole os itens.');
+        return;
+    }
+    
+    // Processar o texto e extrair itens
+    let newItems = [];
+    
+    // Tentar separar por quebra de linha primeiro
+    if (text.includes('\n')) {
+        newItems = text.split('\n')
+            .map(item => item.trim())
+            .filter(item => item.length > 0);
+    }
+    // Se não tiver quebra de linha, tentar por vírgula
+    else if (text.includes(',')) {
+        newItems = text.split(',')
+            .map(item => item.trim())
+            .filter(item => item.length > 0);
+    }
+    // Se não tiver vírgula, tentar por ponto e vírgula
+    else if (text.includes(';')) {
+        newItems = text.split(';')
+            .map(item => item.trim())
+            .filter(item => item.length > 0);
+    }
+    // Se não tiver nenhum separador, usar o texto todo como um item
+    else {
+        newItems = [text];
+    }
+    
+    // Limitar cada item a 30 caracteres
+    newItems = newItems.map(item => item.substring(0, 30));
+    
+    // Limitar a 1000 itens
+    if (newItems.length > 1000) {
+        newItems = newItems.slice(0, 1000);
+        alert('Lista importada com sucesso! Apenas os primeiros 1000 itens foram adicionados (limite máximo).');
+    }
+    
+    // Remover duplicatas
+    newItems = [...new Set(newItems)];
+    
+    if (newItems.length === 0) {
+        alert('Nenhum item válido encontrado.');
+        return;
+    }
+    
+    // Substituir a lista atual pela nova
+    items = newItems;
+    drawnItems = [];
+    lastWinnerToRemove = null;
+    
+    updateWheel();
+    updateItemsList();
+    updateDrawnItems();
+    result.style.display = 'none';
+    
+    closeImportModal();
+    
+    // Feedback visual
+    result.innerHTML = `✅ ${newItems.length} ${newItems.length === 1 ? 'item importado' : 'itens importados'} com sucesso!`;
+    result.style.display = 'block';
+    setTimeout(() => {
+        result.style.display = 'none';
+    }, 3000);
+}
+
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
     // Botões principais
     spinBtn.addEventListener('click', spin);
     addBtn.addEventListener('click', addItem);
     
-    // NOVO: Adicionar evento de clique no centro da roleta
+    // Centro da roleta clicável
     wheelCenter.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevenir propagação do evento
+        e.stopPropagation();
         spin();
     });
     
-    // NOVO: Adicionar cursor pointer e efeito hover no centro
     wheelCenter.style.cursor = 'pointer';
     wheelCenter.style.transition = 'transform 0.2s ease';
     
@@ -412,6 +503,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (e.target.classList.contains('remove-btn')) {
             const index = parseInt(e.target.getAttribute('data-index'));
             removeItem(index);
+        }
+    });
+    
+    // Eventos do modal de importação
+    importListBtn.addEventListener('click', openImportModal);
+    closeModalBtn.addEventListener('click', closeImportModal);
+    cancelImportBtn.addEventListener('click', closeImportModal);
+    confirmImportBtn.addEventListener('click', importBulkItems);
+    
+    // Fechar modal ao clicar fora
+    importModal.addEventListener('click', function(e) {
+        if (e.target === importModal) {
+            closeImportModal();
+        }
+    });
+    
+    // Atalho ESC para fechar modal
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && importModal.style.display === 'flex') {
+            closeImportModal();
         }
     });
 
