@@ -12,6 +12,7 @@ const itemsList = document.getElementById('itemsList');
 const drawnItemsContainer = document.getElementById('drawnItems');
 const removeAfterDrawCheckbox = document.getElementById('removeAfterDraw');
 const restoreBtn = document.getElementById('restoreBtn');
+const wheelCenter = document.querySelector('.wheel-center'); // Adicionar referência ao centro
 
 const colors = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', 
@@ -173,7 +174,7 @@ function updateItemsList() {
 
 function addItem() {
     const newItem = itemInput.value.trim();
-    if (newItem && items.length < 15) {
+    if (newItem) {
         items.push(newItem);
         itemInput.value = '';
         updateWheel();
@@ -317,6 +318,12 @@ function spin() {
     spinBtn.disabled = true;
     result.style.display = 'none';
     
+    // Adicionar feedback visual ao centro da roleta
+    wheelCenter.style.transform = 'translate(-50%, -50%) scale(0.9)';
+    setTimeout(() => {
+        wheelCenter.style.transform = 'translate(-50%, -50%) scale(1)';
+    }, 100);
+    
     wheel.style.transition = 'none';
     wheel.style.transform = 'rotate(0deg)';
     
@@ -356,6 +363,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Botões principais
     spinBtn.addEventListener('click', spin);
     addBtn.addEventListener('click', addItem);
+    
+    // NOVO: Adicionar evento de clique no centro da roleta
+    wheelCenter.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevenir propagação do evento
+        spin();
+    });
+    
+    // NOVO: Adicionar cursor pointer e efeito hover no centro
+    wheelCenter.style.cursor = 'pointer';
+    wheelCenter.style.transition = 'transform 0.2s ease';
+    
+    wheelCenter.addEventListener('mouseenter', function() {
+        if (!isSpinning && items.length > 0) {
+            this.style.transform = 'translate(-50%, -50%) scale(1.1)';
+        }
+    });
+    
+    wheelCenter.addEventListener('mouseleave', function() {
+        if (!isSpinning) {
+            this.style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+    });
     
     // Input com Enter
     itemInput.addEventListener('keypress', (e) => {
